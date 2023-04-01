@@ -23,11 +23,15 @@ router.get('/filter', (req, res) => {
 
 router.get('/:id', (req, res) => {
 	const { id } = req.params;
-	res.json({
-		name: 'phone',
-		price: 100,
-		id,
-	});
+	if (id === '999') {
+		res.status(404).json({ msg: 'not found' });
+	} else {
+		res.status(200).json({
+			name: 'phone',
+			price: 100,
+			id,
+		});
+	}
 });
 
 router.post('/', (req, res) => {

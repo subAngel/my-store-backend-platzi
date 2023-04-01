@@ -1,9 +1,9 @@
-const express = require("express");
-const { faker } = require("@faker-js/faker");
+const express = require('express');
+const { faker } = require('@faker-js/faker');
 
 const router = express.Router();
 
-router.get("/", (req, res) => {
+router.get('/', (req, res) => {
 	const products = [];
 	const { size } = req.query;
 	const limit = size || 10;
@@ -17,22 +17,37 @@ router.get("/", (req, res) => {
 	res.json(products);
 });
 
-router.get("/filter", (req, res) => {
-	res.send("yo soy un filter");
+router.get('/filter', (req, res) => {
+	res.send('yo soy un filter');
 });
 
-router.get("/:id", (req, res) => {
+router.get('/:id', (req, res) => {
 	const { id } = req.params;
 	res.json({
-		name: "phone",
+		name: 'phone',
 		price: 100,
 		id,
 	});
 });
 
-router.post("/", (req, res) => {
+router.post('/', (req, res) => {
 	const body = req.body;
-	res.json({ msg: "created", data: body });
+	res.json({ msg: 'created', data: body });
+});
+
+router.patch('/:id', (req, res) => {
+	const { id } = req.params;
+	const body = req.body;
+	res.json({
+		msg: 'updated',
+		data: body,
+		id,
+	});
+});
+
+router.delete('/:id', (req, res) => {
+	const { id } = req.params;
+	res.json({ msg: 'deleted', id });
 });
 
 module.exports = router;

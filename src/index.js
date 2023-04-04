@@ -1,6 +1,7 @@
 const express = require("express");
 const morgan = require("morgan");
 const debug = require("debug")("my-store:index");
+const cors = require("cors");
 
 const routesApi = require("./routes");
 const {
@@ -16,6 +17,7 @@ app.set("port", process.env.PORT || 3000);
 // * Middlewares
 app.use(morgan("dev"));
 app.use(express.json());
+app.use(cors());
 
 // * Routes
 app.get("/", (req, res) => {
@@ -24,7 +26,6 @@ app.get("/", (req, res) => {
 
 routesApi(app);
 
-// middlewares error
 app.use(logErrors);
 app.use(booErrorHandler);
 app.use(errorHandler);

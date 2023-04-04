@@ -2,6 +2,7 @@ const express = require("express");
 const morgan = require("morgan");
 const debug = require("debug")("my-store:index");
 const cors = require("cors");
+require("dotenv").config();
 
 const routesApi = require("./routes");
 const {
@@ -17,7 +18,7 @@ app.set("port", process.env.PORT || 3000);
 const whiteList = ["http://localhost:5500", "https://myapp.com"];
 const corsOptions = {
 	origin: (origin, callback) => {
-		if (whiteList.includes(origin)) {
+		if (whiteList.includes(origin) || !origin) {
 			callback(null, true);
 		} else {
 			callback(new Error("No permitido"));

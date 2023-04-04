@@ -2,16 +2,16 @@ const Joi = require("joi");
 
 const id = Joi.number().integer();
 const name = Joi.string().min(5).max(20);
-const image = Joi.string().uri();
+const description = Joi.string().min(10).max(200);
 
 const createCategorySchema = Joi.object({
 	name: name.required(),
-	image: image.required(),
+	description: description.required(),
 });
 
 const updateCategorySchema = Joi.object({
 	name: name.required(),
-	image: image.required(),
+	description: description.required(),
 });
 
 const getCategorySchema = Joi.object({

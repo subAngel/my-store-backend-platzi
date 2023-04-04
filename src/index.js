@@ -11,13 +11,24 @@ const {
 } = require("./middlewares/error.handler");
 
 const app = express();
+
 // * Settings
 app.set("port", process.env.PORT || 3000);
+const whiteList = ["http://localhost:5500", "https://myapp.com"];
+const corsOptions = {
+	origin: (origin, callback) => {
+		if (whiteList.includes(origin)) {
+			callback(null, true);
+		} else {
+			callback(new Error("No permitido"));
+		}
+	},
+};
 
 // * Middlewares
 app.use(morgan("dev"));
 app.use(express.json());
-app.use(cors());
+app.use(cors(corsOptions));
 
 // * Routes
 app.get("/", (req, res) => {

@@ -1,15 +1,12 @@
 const { faker } = require("@faker-js/faker");
+const debug = require("debug")("my-store:product-service");
 const boom = require("@hapi/boom");
-class ProdutService {
-	static _productServiceInstance = null;
 
-	static getInstance() {
-		if (ProdutService._productServiceInstance == null) {
-			ProdutService._productServiceInstance = new ProdutService();
-		}
-		return ProdutService._productServiceInstance;
-	}
+const pool = require("../libs/postgres.pool");
+class ProdutService {
 	constructor() {
+		this.pool = pool;
+		this.pool.on("error", (err) => debug("Error en el pool de conexion"));
 		this.productos = [];
 		this.generate();
 	}
@@ -37,7 +34,9 @@ class ProdutService {
 	}
 
 	async find() {
-		return this.productos;
+		const query = "SELECT * FROM tasks";
+		const rta = await this.pool.query(query);
+		return rta.rows;
 	}
 
 	async findOne(id) {

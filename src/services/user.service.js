@@ -1,16 +1,20 @@
-const boom = require("@hapi/boom");
-const getConnection = require("../libs/postgres");
-
+// const boom = require("@hapi/boom");
+// const getConnection = require("../libs/postgres");
+const debug = require("debug")("my-app:user-service");
+const pool = require("../libs/postgres.pool");
 class UserService {
-	constructor() {}
+	constructor() {
+		this.pool = pool;
+		this.pool.on("error", (err) => debug("Error en el pool de conexion"));
+	}
 
 	async create(data) {
 		return data;
 	}
 
 	async find() {
-		const client = await getConnection();
-		const response = await client.query("SELECT * FROM tasks;");
+		const query = "SELECT * FROM tasks;";
+		const response = await this.pool.query(query);
 		return response.rows;
 	}
 

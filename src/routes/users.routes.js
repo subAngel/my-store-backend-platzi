@@ -1,5 +1,4 @@
 const express = require("express");
-const { faker } = require("@faker-js/faker");
 const userService = require("../services/user.service");
 const validatoHandler = require("../middlewares/validator.handler");
 const {
@@ -66,4 +65,20 @@ router.patch(
 	}
 );
 
+router.delete(
+	"/:id",
+	validatoHandler(getUserSchema, "params"),
+	async (req, res, next) => {
+		try {
+			const { id } = req.params;
+			await service.delete(id);
+			res.status(201).json({
+				id,
+				message: "User deleted",
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+);
 module.exports = router;

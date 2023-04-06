@@ -7,20 +7,20 @@ const username = Joi.string()
 	.max(30);
 const fullname = Joi.string().min(5);
 const password = Joi.string().alphanum().min(8);
-const email = Joi.string().email();
+// const email = Joi.string().email();
 
 const createUserSchema = Joi.object({
 	username: username.required(),
 	fullname: fullname.required(),
 	password: password.required(),
-	email: email,
+	// email: email,
 });
 
 const updateUserSchema = Joi.object({
 	username: username,
 	fullname: fullname,
 	password: password,
-	email: email,
+	// email: email,
 });
 
 const getUserSchema = Joi.object({

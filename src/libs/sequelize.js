@@ -3,12 +3,14 @@ const { Sequelize } = require("sequelize");
 const { config } = require("../config/config");
 const setupModels = require("../db/models");
 
+const MOTOR_DB = "mysql";
+
 const USER = encodeURIComponent(config.db_user);
 const PASSWORD = encodeURIComponent(config.db_password);
-const URI = `postgres://${USER}:${PASSWORD}@${config.db_host}:${config.db_port}/${config.db_name}`;
+const URI = `${MOTOR_DB}://${USER}:${PASSWORD}@${config.db_host}:${config.db_port}/${config.db_name}`;
 
 const sequelize = new Sequelize(URI, {
-	dialect: "postgres",
+	dialect: MOTOR_DB,
 	//logging: console.log, // * Default, displays the first parameter of the log function call
 	//logging: (...msg) => console.log(msg), // * Displays all log function call parameters
 	logging: false, // * Disables logging

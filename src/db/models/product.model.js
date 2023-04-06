@@ -1,26 +1,32 @@
 const { Model, DataTypes, Sequelize } = require("sequelize");
+// const sequelize = require("../../libs/sequelize");
 
-const USER_TABLE = "users";
+const PRODUCT_TABLE = "products";
 
-const UserSchema = {
+const productSchema = {
 	id: {
 		allowNull: false,
 		autoIncrement: true,
 		primaryKey: true,
 		type: DataTypes.INTEGER,
 	},
-	fullname: {
+	name: {
 		allowNull: false,
 		type: DataTypes.STRING,
 	},
-	username: {
+	price: {
 		allowNull: false,
-		type: DataTypes.STRING,
-		unique: true,
+		type: DataTypes.DECIMAL,
 	},
-	password: {
-		allowNull: false,
+	image: {
+		allowNull: true,
 		type: DataTypes.STRING,
+	},
+	isBlock: {
+		allowNull: false,
+		type: DataTypes.BOOLEAN,
+		field: "is_block",
+		defaultValue: false,
 	},
 	createdAt: {
 		allowNull: false,
@@ -30,19 +36,20 @@ const UserSchema = {
 	},
 };
 
-class User extends Model {
-	static associate() {
-		// associations
-	}
-
+class Product extends Model {
+	static associate() {}
 	static config(sequelize) {
 		return {
 			sequelize,
-			tableName: USER_TABLE,
-			modelName: "User",
+			tableName: PRODUCT_TABLE,
+			modelName: "Product",
 			timestamps: false,
 		};
 	}
 }
 
-module.exports = { USER_TABLE, UserSchema, User };
+module.exports = {
+	PRODUCT_TABLE,
+	productSchema,
+	Product,
+};

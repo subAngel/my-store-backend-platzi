@@ -1,21 +1,21 @@
-// const boom = require("@hapi/boom");
-// const getConnection = require("../libs/postgres");
+const boom = require("@hapi/boom");
 const debug = require("debug")("my-app:user-service");
-const pool = require("../libs/postgres.pool");
+
+const { models } = require("../libs/sequelize");
 class UserService {
-	constructor() {
-		this.pool = pool;
-		this.pool.on("error", (err) => debug("Error en el pool de conexion"));
-	}
+	constructor() {}
 
 	async create(data) {
 		return data;
 	}
 
 	async find() {
-		const query = "SELECT * FROM tasks;";
-		const response = await this.pool.query(query);
-		return response.rows;
+		try {
+			const response = await models.User.findAll();
+			return response;
+		} catch (error) {
+			throw boom.badGateway("Error de la consulta");
+		}
 	}
 
 	async findOne(id) {

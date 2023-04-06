@@ -1,3 +1,5 @@
+const { ValidationError } = require("sequelize");
+
 const debug = require("debug")("my-store:middleware-error");
 
 function logErrors(err, req, res, next) {
@@ -23,4 +25,20 @@ function booErrorHandler(err, req, res, next) {
 	}
 }
 
-module.exports = { logErrors, errorHandler, booErrorHandler };
+function ormErrorHandler(err, req, res, next) {
+	if (err instanceof ValidationError) {
+		res.status(409).json({
+			statusCode: 409,
+			message: err.name,
+			errors: err.errors,
+		});
+	}
+	next(err);
+}
+
+module.exports = {
+	logErrors,
+	errorHandler,
+	booErrorHandler,
+	ormErrorHandler,
+};

@@ -6,27 +6,32 @@ class UserService {
 	constructor() {}
 
 	async create(data) {
-		return data;
+		const newUser = await models.User.create(data);
+		return newUser;
 	}
 
 	async find() {
-		try {
-			const response = await models.User.findAll();
-			return response;
-		} catch (error) {
-			throw boom.badGateway("Error de la consulta");
-		}
+		const response = await models.User.findAll();
+		return response;
 	}
 
 	async findOne(id) {
-		return { id };
+		const user = await models.User.findByPk(id);
+		if (!user) {
+			throw boom.notFound("User not found");
+		}
+		return user;
 	}
 
 	async update(id, changes) {
-		return { id, changes };
+		const user = await this.findOne(id);
+		const userUpdated = await user.update(changes);
+		return userUpdated;
 	}
 
 	async delete(id) {
+		const user = await this.findOne(id);
+		await user.destroy();
 		return { id };
 	}
 }

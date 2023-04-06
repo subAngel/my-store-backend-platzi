@@ -9,7 +9,11 @@ const URI = `postgres://${USER}:${PASSWORD}@${config.db_host}:${config.db_port}/
 
 const sequelize = new Sequelize(URI, {
 	dialect: "postgres",
-	logging: console.log, // s
+	//logging: console.log, // * Default, displays the first parameter of the log function call
+	//logging: (...msg) => console.log(msg), // * Displays all log function call parameters
+	logging: false, // * Disables logging
+	//logging: (msg) => logger.debug(msg), // * Use custom logger (e.g. Winston or Bunyan), displays the first parameter
+	//logging: logger.debug.bind(logger), // * Alternative way to use custom logger, displays all messages
 });
 
 setupModels(sequelize);

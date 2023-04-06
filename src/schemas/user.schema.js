@@ -2,7 +2,7 @@ const Joi = require("joi");
 
 const id = Joi.string().uuid();
 const username = Joi.string()
-	.regex(/^[A-Za-z][A-Za-z0-9_]$/)
+	.regex(/^[A-Za-z][A-Za-z0-9_]+$/)
 	.min(4)
 	.max(30);
 const fullname = Joi.string().min(5);

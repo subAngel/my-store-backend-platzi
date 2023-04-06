@@ -1,5 +1,5 @@
 const boom = require("@hapi/boom");
-const debug = require("debug")("my-app:user-service");
+// const debug = require("debug")("my-app:user-service");
 
 const { models } = require("../libs/sequelize");
 class UserService {

@@ -36,7 +36,7 @@ router.get(
 router.post("/", validatorHandler(createProductSchema, "body"), async (req, res) => {
 	const body = req.body;
 	const newProduct = await service.create(body);
-	res.json({ msg: "created", data: newProduct });
+	res.status(201).json({ msg: "Product created", data: newProduct });
 });
 
 router.patch(
@@ -48,21 +48,28 @@ router.patch(
 			const { id } = req.params;
 			const body = req.body;
 			const product = await service.patch(id, body);
-			res.json(product);
+			res.status(200).json(product);
 		} catch (error) {
 			next(error);
 		}
 	}
 );
 
-router.delete("/:id", async (req, res, next) => {
-	try {
-		const { id } = req.params;
-		const response = await service.delete(id);
-		res.json(response);
-	} catch (error) {
-		next(error);
+router.delete(
+	"/:id",
+	validatorHandler(getProductSchema, "params"),
+	async (req, res, next) => {
+		try {
+			const { id } = req.params;
+			const response = await service.delete(id);
+			res.status(200).json({
+				response,
+				msg: "Product deleted",
+			});
+		} catch (error) {
+			next(error);
+		}
 	}
-});
+);
 
 module.exports = router;

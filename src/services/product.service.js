@@ -1,34 +1,14 @@
-const { faker } = require("@faker-js/faker");
+// const { faker } = require("@faker-js/faker");
 // const debug = require("debug")("my-store:product-service");
 const boom = require("@hapi/boom");
 
 const { models } = require("../libs/sequelize");
 
 class ProdutService {
-	constructor() {
-		this.productos = [];
-		this.generate();
-	}
-
-	async generate() {
-		const limit = 100;
-		for (let i = 0; i < limit; i++) {
-			this.productos.push({
-				id: faker.datatype.uuid(),
-				name: faker.commerce.productName(),
-				price: parseInt(faker.commerce.price()),
-				image: faker.image.imageUrl(),
-				isBlock: faker.datatype.boolean(),
-			});
-		}
-	}
+	constructor() {}
 
 	async create(data) {
-		const newProduct = {
-			id: faker.datatype.uuid(),
-			...data,
-		};
-		this.productos.push(newProduct);
+		const newProduct = await models.Product.create(data);
 		return newProduct;
 	}
 
@@ -38,7 +18,7 @@ class ProdutService {
 	}
 
 	async findOne(id) {
-		const product = this.productos.find((item) => item.id === id);
+		const product = await models.Product.findByPk(id);
 		if (!product) {
 			throw boom.notFound("Product not found");
 		}
@@ -49,26 +29,16 @@ class ProdutService {
 	}
 
 	async patch(id, changes) {
-		const index = this.productos.findIndex((item) => item.id === id);
+		const product = await this.findOne(id);
+		const newProdut = await product.update(changes);
 		// si no se encuetra el producto regresa un -1
-		if (index === -1) {
-			throw boom.notFound("Product not found");
-		}
-		const producto = this.productos[index];
-		this.productos[index] = {
-			...producto,
-			...changes,
-		};
-		return this.productos[index];
+		return newProdut;
 	}
 
 	async delete(id) {
-		const index = this.productos.findIndex((item) => item.id === id);
-		if (index === -1) {
-			throw boom.notFound("Product not found");
-		}
-		this.productos.splice(index, 1);
-		return { msg: "deleted" };
+		const product = await this.findOne(id);
+		await product.destroy();
+		return id;
 	}
 }
 

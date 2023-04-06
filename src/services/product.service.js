@@ -1,5 +1,5 @@
 const { faker } = require("@faker-js/faker");
-const debug = require("debug")("my-store:product-service");
+// const debug = require("debug")("my-store:product-service");
 const boom = require("@hapi/boom");
 
 const sequelize = require("../libs/sequelize");

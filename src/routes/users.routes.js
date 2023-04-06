@@ -47,5 +47,23 @@ router.post(
 		}
 	}
 );
+router.patch(
+	"/",
+	validatoHandler(getUserSchema, "params"),
+	validatoHandler(updateUserSchema, "body"),
+	async (req, res, next) => {
+		try {
+			const { id } = req.params;
+			const body = req.body;
+			await service.update(id, body);
+			res.status(200).json({
+				id,
+				message: "User updated",
+			});
+		} catch (error) {
+			next(error);
+		}
+	}
+);
 
 module.exports = router;

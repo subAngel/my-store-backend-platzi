@@ -1,6 +1,6 @@
 const Joi = require("joi");
 
-const id = Joi.string().uuid();
+const id = Joi.string();
 const username = Joi.string()
 	.regex(/^[A-Za-z][A-Za-z0-9_]+$/)
 	.min(4)

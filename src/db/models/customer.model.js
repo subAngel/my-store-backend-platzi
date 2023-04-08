@@ -27,6 +27,7 @@ const CustomerSchema = {
 		field: "created_at",
 		defaultValue: Sequelize.NOW,
 	},
+	// TODO crear la asociacion con el user
 };
 
 class Customer extends Model {

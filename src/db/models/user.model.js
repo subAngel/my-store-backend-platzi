@@ -9,11 +9,6 @@ const UserSchema = {
 		primaryKey: true,
 		type: DataTypes.INTEGER,
 	},
-	// TODO quitar una columna con las migraciones
-	// fullname: {
-	// 	allowNull: false,
-	// 	type: DataTypes.STRING,
-	// },
 	username: {
 		allowNull: false,
 		type: DataTypes.STRING,

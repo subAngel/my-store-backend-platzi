@@ -31,7 +31,10 @@ class CustomerService {
 	async delete(id) {
 		const customer = await this.findOne(id);
 		const response = await customer.destroy();
-		return response;
+		return {
+			message: "Customer deleted",
+			id: parseInt(id),
+		};
 	}
 }
 

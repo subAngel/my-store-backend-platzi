@@ -7,7 +7,7 @@ const { Order, OrdersSchema } = require("./order.model");
 
 function setupModels(sequelize) {
 	User.init(UserSchema, User.config(sequelize));
-	Customer.init(CustomerSchema, User.config(sequelize));
+	Customer.init(CustomerSchema, Customer.config(sequelize));
 
 	Customer.associate(sequelize.models);
 }

@@ -70,8 +70,8 @@ router.delete(
 	async (req, res, next) => {
 		try {
 			const { id } = req.params;
-			await service.delete(id);
-			res.status(201).json({ id });
+			const response = await service.delete(id);
+			res.status(201).json(response);
 		} catch (error) {
 			next(error);
 		}

@@ -6,8 +6,12 @@ class UserService {
 	constructor() {}
 
 	async create(data) {
-		const newUser = await models.User.create(data);
-		return newUser;
+		try {
+			const newUser = await models.User.create(data);
+			return newUser;
+		} catch (error) {
+			throw boom.badRequest("Invalid data");
+		}
 	}
 
 	async find() {

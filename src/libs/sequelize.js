@@ -3,7 +3,7 @@ const { Sequelize } = require("sequelize");
 const { config } = require("../config/config");
 const setupModels = require("../db/models");
 
-const MOTOR_DB = "mysql";
+const MOTOR_DB = "postgres";
 
 const USER = encodeURIComponent(config.db_user);
 const PASSWORD = encodeURIComponent(config.db_password);

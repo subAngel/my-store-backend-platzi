@@ -7,15 +7,9 @@ const { Order, OrdersSchema } = require("./order.model");
 
 function setupModels(sequelize) {
 	User.init(UserSchema, User.config(sequelize));
-	// Customer.init(CustomerSchema, Customer.config(sequelize));
+	Customer.init(CustomerSchema, User.config(sequelize));
 
-	// Product.init(productSchema, Product.config(sequelize));
-	// Category.init(CategorySchema, Category.config(sequelize));
-	// Order.init(OrdersSchema, Order.config(sequelize));
-	// OrdersProduct.init(OrdersProductSchema, OrdersProduct.config(sequelize));
-
-	// User.associate(sequelize.models);
-	// Customer.associate(sequelize.models); // generar la asociacion con usuarios 'belongsTo'
+	Customer.associate(sequelize.models);
 }
 
 module.exports = setupModels;

@@ -10,10 +10,8 @@ class CustomerService {
 	}
 
 	async create(data) {
-		// TODO crear un customer
-		return data;
-		// const newCustomer = await models.Customer.create(data);
-		// return newCustomer;
+		const newCustomer = await models.Customer.create(data);
+		return newCustomer;
 	}
 
 	async findOne(id) {

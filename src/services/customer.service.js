@@ -5,7 +5,9 @@ class CustomerService {
 	constructor() {}
 
 	async find() {
-		const response = await models.Customer.findAll();
+		const response = await models.Customer.findAll({
+			include: ["user"],
+		});
 		return response;
 	}
 
@@ -30,7 +32,7 @@ class CustomerService {
 
 	async delete(id) {
 		const customer = await this.findOne(id);
-		const response = await customer.destroy();
+		await customer.destroy();
 		return {
 			message: "Customer deleted",
 			id: parseInt(id),

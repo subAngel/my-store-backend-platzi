@@ -29,23 +29,10 @@ const CustomerSchema = {
 		field: "created_at",
 		defaultValue: Sequelize.NOW,
 	},
-	userId: {
-		field: "user_id",
-		allowNull: false,
-		type: DataTypes.INTEGER,
-		references: {
-			model: USER_TABLE,
-			key: "id",
-		},
-		onUpdate: "CASCADE",
-		onDelete: "SET NULL",
-	},
 };
 
 class Customer extends Model {
-	static associate(models) {
-		this.belongsTo(models.User, { as: "user" });
-	}
+	static associate() {}
 
 	static config(sequelize) {
 		return {

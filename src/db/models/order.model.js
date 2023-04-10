@@ -1,5 +1,6 @@
 const { Model, Sequelize, DataTypes } = require("sequelize");
 
+const { CUSTOMER_TABLE } = require("./customer.model");
 const ORDER_TABLE = "orders";
 
 const OrdersSchema = {
@@ -10,9 +11,20 @@ const OrdersSchema = {
 		type: DataTypes.INTEGER,
 	},
 	delivered: {
-		// allowNull: false,
+		allowNull: false,
 		type: DataTypes.BOOLEAN,
 		defaultValue: false,
+	},
+	customerId: {
+		field: "customer_id",
+		allowNull: false,
+		type: DataTypes.INTEGER,
+		references: {
+			model: CUSTOMER_TABLE,
+			key: "id",
+		},
+		onUpdate: "CASCADE",
+		onDelete: "SET NULL",
 	},
 	createdAt: {
 		allowNull: false,
@@ -20,12 +32,13 @@ const OrdersSchema = {
 		field: "created_at",
 		defaultValue: Sequelize.NOW,
 	},
-	// TODO Crear el customer id
 };
 
 class Order extends Model {
-	static associate() {
-		// associations
+	static associate(models) {
+		this.belongsTo(models.Customer, {
+			as: "customer",
+		});
 	}
 
 	static config(sequelize) {

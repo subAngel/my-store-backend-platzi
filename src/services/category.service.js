@@ -1,12 +1,17 @@
 const boom = require("@hapi/boom");
 const { models } = require("../libs/sequelize");
+const debug = require("debug")("my-store:category-service");
 
 class CategoryService {
 	constructor() {}
 
 	async create(data) {
-		const newCategory = await models.Category.create(data);
-		return newCategory;
+		try {
+			const newCategory = await models.Category.create(data);
+			return newCategory;
+		} catch (error) {
+			throw boom.conflict("Category already exists");
+		}
 	}
 
 	async find() {

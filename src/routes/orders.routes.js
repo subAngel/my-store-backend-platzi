@@ -67,7 +67,7 @@ router.delete(
 			const { id } = req.params;
 			const response = await service.delete(id);
 			res.status(200).json({
-				response,
+				id: response,
 				msg: "Order deleted",
 			});
 		} catch (error) {

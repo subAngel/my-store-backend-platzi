@@ -1,13 +1,11 @@
 const express = require("express");
-const orderService = require("../services/order.service.");
+const orderService = require("../services/order.service");
 const validatorHandler = require("../middlewares/validator.handler");
 const {
 	createOrderSchema,
 	getOrderSchema,
 	updateOrderSchema,
 } = require("../schemas/order.schema");
-const { valid } = require("joi");
-const { updateProductSchema } = require("../schemas/product.schema");
 
 const router = express.Router();
 const service = new orderService();
@@ -48,7 +46,7 @@ router.post(
 router.patch(
 	"/:id",
 	validatorHandler(getOrderSchema, "params"),
-	validatorHandler(updateProductSchema, "body"),
+	validatorHandler(updateOrderSchema, "body"),
 	async (req, res, next) => {
 		try {
 			const { id } = req.params;

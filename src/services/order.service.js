@@ -16,6 +16,7 @@ class OrderService {
 					association: "customer",
 					include: ["user"],
 				},
+				"items",
 			],
 		});
 		if (!order) {
@@ -39,6 +40,10 @@ class OrderService {
 		const order = await this.findOne(id);
 		await order.destroy();
 		return id;
+	}
+	async addItem(data) {
+		const newItem = await models.OrdersProducts.create(data);
+		return newItem;
 	}
 }
 

@@ -1,5 +1,5 @@
 // const { faker } = require("@faker-js/faker");
-// const debug = require("debug")("my-store:product-service");
+const debug = require("debug")("my-store:product-service");
 const boom = require("@hapi/boom");
 
 const { models } = require("../libs/sequelize");
@@ -18,6 +18,7 @@ class ProdutService {
 			include: ["category"],
 			where: {},
 		};
+
 		// * paginacion
 		const { limit, offset } = query;
 		if (limit && offset) {
@@ -29,8 +30,10 @@ class ProdutService {
 		if (price) {
 			options.where.price = price;
 		}
+
 		const { price_min, price_max } = query;
 		if (price_min && price_max) {
+			// debug(price_min);
 			options.where.price = {
 				[Op.gte]: price_min,
 				[Op.lte]: price_max,

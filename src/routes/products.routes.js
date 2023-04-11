@@ -24,10 +24,6 @@ router.get(
 	}
 );
 
-router.get("/filter", async (req, res) => {
-	res.send("yo soy un filter");
-});
-
 router.get(
 	"/:id",
 	validatorHandler(getProductSchema, "params"),

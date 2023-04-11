@@ -8,11 +8,11 @@ const URI = `${MOTOR_DB}://${USER}:${PASSWORD}@${config.db_host}:${config.db_por
 
 module.exports = {
 	development: {
-		url: URI,
+		url: config.db_url,
 		dialect: MOTOR_DB,
 	},
 	production: {
-		url: URI,
+		url: config.db_url,
 		dialect: MOTOR_DB,
 	},
 };

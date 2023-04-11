@@ -5,18 +5,17 @@ const setupModels = require("../db/models");
 
 const MOTOR_DB = "postgres";
 
-const USER = encodeURIComponent(config.db_user);
-const PASSWORD = encodeURIComponent(config.db_password);
-const URI = `${MOTOR_DB}://${USER}:${PASSWORD}@${config.db_host}:${config.db_port}/${config.db_name}`;
-
-const sequelize = new Sequelize(URI, {
+const options = {
 	dialect: MOTOR_DB,
-	//logging: console.log, // * Default, displays the first parameter of the log function call
-	//logging: (...msg) => console.log(msg), // * Displays all log function call parameters
-	logging: false, // * Disables logging
-	//logging: (msg) => logger.debug(msg), // * Use custom logger (e.g. Winston or Bunyan), displays the first parameter
-	//logging: logger.debug.bind(logger), // * Alternative way to use custom logger, displays all messages
-});
+	logging: config.isProd ? false : console.log,
+};
+
+if (config.isProd) {
+	options.ssl = {
+		rejectUnauthorized: false,
+	};
+}
+const sequelize = new Sequelize(config.db_url, options);
 
 setupModels(sequelize);
 

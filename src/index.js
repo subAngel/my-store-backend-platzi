@@ -34,7 +34,7 @@ app.use(cors(corsOptions));
 
 // * Routes
 app.get("/", (req, res) => {
-	res.send("hello world");
+	res.send("welcome to the api store");
 });
 
 routesApi(app);

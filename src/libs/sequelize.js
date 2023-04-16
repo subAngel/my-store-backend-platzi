@@ -7,7 +7,7 @@ const MOTOR_DB = "postgres";
 
 const options = {
 	dialect: MOTOR_DB,
-	logging: config.isProd ? false : console.log,
+	logging: config.isProd ? console.log : false,
 };
 
 if (config.isProd) {

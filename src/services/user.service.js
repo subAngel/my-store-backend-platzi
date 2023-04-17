@@ -1,4 +1,5 @@
 const boom = require("@hapi/boom");
+const bcrypt = require("bcrypt");
 // const debug = require("debug")("my-app:user-service");
 
 const { models } = require("../libs/sequelize");
@@ -7,7 +8,11 @@ class UserService {
 
 	async create(data) {
 		try {
-			const newUser = await models.User.create(data);
+			const hash = await bcrypt.hash(data.password, 10);
+			const newUser = await models.User.create({
+				...data,
+				password: hash,
+			});
 			return newUser;
 		} catch (error) {
 			throw boom.badRequest("Invalid data");

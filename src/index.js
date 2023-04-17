@@ -11,6 +11,7 @@ const {
 	booErrorHandler,
 	ormErrorHandler,
 } = require("./middlewares/error.handler");
+const { checkApiKey } = require("./middlewares/auth.handler");
 
 const app = express();
 
@@ -35,6 +36,10 @@ app.use(cors(corsOptions));
 // * Routes
 app.get("/", (req, res) => {
 	res.send("welcome to the api store");
+});
+
+app.get("/ruta", checkApiKey, (req, res) => {
+	res.send("Hola soy una ruta");
 });
 
 routesApi(app);

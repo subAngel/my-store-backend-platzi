@@ -13,6 +13,7 @@ class UserService {
 				...data,
 				password: hash,
 			});
+			delete newUser.dataValues.password;
 			return newUser;
 		} catch (error) {
 			throw boom.badRequest("Invalid data");

@@ -9,6 +9,7 @@ class CustomerService {
 		const response = await models.Customer.findAll({
 			include: ["user"],
 		});
+		// console.log(response.Customer);
 		return response;
 	}
 

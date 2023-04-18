@@ -28,6 +28,17 @@ class UserService {
 		return response;
 	}
 
+	async findByEmail(email) {
+		try {
+			const user = await models.User.findOne({
+				where: { email },
+			});
+			return user;
+		} catch (error) {
+			throw boom.notFound(`User with email "${email}" not found`);
+		}
+	}
+
 	async findOne(id) {
 		const user = await models.User.findByPk(id);
 		if (!user) {

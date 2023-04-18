@@ -33,6 +33,8 @@ app.use(morgan("dev"));
 app.use(express.json());
 app.use(cors(corsOptions));
 
+require("./utils/auth");
+
 // * Routes
 app.get("/", (req, res) => {
 	res.send("welcome to the api store");

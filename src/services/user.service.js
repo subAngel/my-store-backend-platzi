@@ -39,6 +39,17 @@ class UserService {
 		}
 	}
 
+	async findByUsername(username) {
+		try {
+			const user = await models.User.findOne({
+				where: { username },
+			});
+			return user;
+		} catch (error) {
+			throw boom.notFound(`User with username "${username} not found"`);
+		}
+	}
+
 	async findOne(id) {
 		const user = await models.User.findByPk(id);
 		if (!user) {

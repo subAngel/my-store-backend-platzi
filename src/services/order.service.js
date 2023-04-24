@@ -5,8 +5,8 @@ class OrderService {
 	constructor() {}
 
 	async find() {
-		const orders = await models.Order.findAll();
-		return orders;
+		const allOrders = await models.Order.findAll();
+		return allOrders;
 	}
 
 	async findByUser(userId) {

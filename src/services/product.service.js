@@ -40,6 +40,7 @@ class ProdutService {
 			};
 		}
 		const response = await models.Product.findAll(options);
+		console.log(response);
 		return response;
 	}
 

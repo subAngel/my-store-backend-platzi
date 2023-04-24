@@ -1,4 +1,5 @@
 const express = require("express");
+const boom = require("@hapi/boom");
 const orderService = require("../services/order.service");
 const validatorHandler = require("../middlewares/validator.handler");
 const {
@@ -11,10 +12,19 @@ const { addItemSchema } = require("../schemas/orders-products.schema");
 const router = express.Router();
 const service = new orderService();
 
-router.get("/", async (req, res) => {
-	const orders = await service.find();
-	res.json(orders);
-});
+router.get(
+	"/",
+
+	async (req, res, next) => {
+		try {
+			const orders = await service.find();
+			res.json(orders);
+		} catch (error) {
+			// console.error(error);
+			next(boom.badImplementation());
+		}
+	}
+);
 
 router.get(
 	"/:id",
@@ -37,7 +47,8 @@ router.post(
 		try {
 			const order = req.body;
 			const newOrder = await service.create(order);
-			res.status(201).json(newOrder);
+			console.log(newOrder);
+			res.status(201).json(newOrder.dataValues);
 		} catch (error) {
 			next(error);
 		}

@@ -1,7 +1,10 @@
 const boom = require("@hapi/boom");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const UserService = require("./user.service");
+const { config } = require("../config/config");
+
 const service = new UserService();
 class AuthService {
 	async getUser(username, password) {
@@ -16,6 +19,20 @@ class AuthService {
 		delete user.dataValues.password;
 		return user;
 	}
+
+	signToken(user) {
+		const payload = {
+			sub: user.id,
+			role: user.role,
+		};
+		const token = jwt.sign(payload, config.secret_key);
+		return {
+			user,
+			token,
+		};
+	}
+
+	sendMail(email) {}
 }
 
 module.exports = AuthService;

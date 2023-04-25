@@ -221,3 +221,4 @@ postgres_data
 mysql_data
 src/hash-pass.js
 src/pass-verify.js
+src/test-libs

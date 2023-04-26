@@ -74,6 +74,26 @@ class AuthService {
 			message: "Mail sent",
 		};
 	}
+
+	async changePassword(token, newPassword) {
+		try {
+			const payload = jwt.verify(token, config.secret_key);
+			const user = await service.findOne(payload.sub);
+			if (user.recoveryToken !== token) {
+				throw boom.notAcceptable();
+			}
+			const hashPasswod = await bcrypt.hash(newPassword, 10);
+			await service.update(user.id, {
+				recoveryToken: null,
+				password: hashPasswod,
+			});
+			return {
+				message: "password changed",
+			};
+		} catch (error) {
+			throw boom.unauthorized();
+		}
+	}
 }
 
 module.exports = AuthService;
